@@ -12,6 +12,6 @@ in this exercise the palindrome FiliIlif is treated differently and reported sep
 # Compile
 To command line compile follow these steps from the project root directory:
 
-cd src
-javac PalindromeExercise.java
+cd src; 
+javac PalindromeExercise.java; 
 java PalindromeExercise
