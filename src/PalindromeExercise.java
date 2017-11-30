@@ -6,7 +6,13 @@ import java.util.*;
  * Created on 11/29/17
  *
  * @author Christopher Brown
- * @version 1.0
+ * @version 1.1
+ *
+ * Changes in v1.1 (11/30/17):
+ *      - Ordered the palindrome combinations via TreeSet so that it is easy to compare output across tests
+ *      - Added display method for Set as well as common iterator output method
+ *      - Break out of loopForPalindromeFrontToBack as soon as we've exhausted the potential list elements
+ *      - Added additional test cases
  */
 public class PalindromeExercise {
   /*
@@ -17,7 +23,7 @@ public class PalindromeExercise {
   /*
    * Palindrome name combinations
    */
-  private List<String> palindromeNameCombinations = new ArrayList<>();
+  private Set<String> palindromeNameCombinations = new TreeSet<>();
   
   /*
    * Add a name to our list of potential palindrome name combinations
@@ -36,8 +42,29 @@ public class PalindromeExercise {
    */
   private void displayListNames(final List<String> names,
                                 final String fluffText) {
+    System.out.println(fluffText);
+    iteratorLoop(names.iterator());
+  }
+  
+  /*
+   * Take a set of names and display them, comma separated, with the corresponding fluff text
+   *
+   * @param names     The set of names to display, comma separated
+   * @param fluffText The fluff text to prepend to the list of names
+   */
+  private void displaySetNames(final Set<String> names,
+                               final String fluffText) {
+    System.out.println(fluffText);
+    iteratorLoop(names.iterator());
+  }
+  
+  /*
+   * Common iterator loop that displays all names in the iterator, comma separated
+   *
+   * @param iterator The String iterator from which to print the names, comma separated
+   */
+  private void iteratorLoop(final Iterator<String> iterator) {
     String output = new String();
-    Iterator<String> iterator = names.iterator();
     while(iterator.hasNext()) {
       String currentName = iterator.next();
       if(output.length() > 0) {
@@ -45,7 +72,7 @@ public class PalindromeExercise {
       }
       output = output.concat(currentName);
     }
-    System.out.println(fluffText + output);
+    System.out.println(output);
   }
     
   /*
@@ -58,7 +85,7 @@ public class PalindromeExercise {
   
     loopForPalindromeFrontToBack(new String(), new HashSet<>());
   
-    displayListNames(palindromeNameCombinations,
+    displaySetNames(palindromeNameCombinations,
         "The palindrome combinations are: ");
   }
   
@@ -89,8 +116,10 @@ public class PalindromeExercise {
         palindromeNameCombinations.add(palindromeCandidate);
       }
       
-      // Recursively loop through the list
-      loopForPalindromeFrontToBack(palindromeCandidate, newSet);
+      // Recursively loop through the list - but only if there are unprocessed elements remaining
+      if(newSet.size() < potentialPalindromeNames.size()) {
+        loopForPalindromeFrontToBack(palindromeCandidate, newSet);
+      }
     }
   }
   
@@ -108,6 +137,7 @@ public class PalindromeExercise {
   
   public static void main(String args[]) {
     // HMH provided exercise
+    System.out.println("HMH Provided Exercise:");
     PalindromeExercise palindromeExercise = new PalindromeExercise();
     palindromeExercise.addName("Gimli");
     palindromeExercise.addName("Fili");
@@ -115,5 +145,42 @@ public class PalindromeExercise {
     palindromeExercise.addName("Ilmig");
     palindromeExercise.addName("Mark");
     palindromeExercise.determineAllPalindromes();
+    System.out.println();
+  
+    // Test Case #1
+    //  Note: Even though the order of the names has changed the output had better be the same
+    System.out.println("Test Case #1:");
+    PalindromeExercise palindromeExercise1 = new PalindromeExercise();
+    palindromeExercise1.addName("Ilmig");
+    palindromeExercise1.addName("Gimli");
+    palindromeExercise1.addName("Mark");
+    palindromeExercise1.addName("Fili");
+    palindromeExercise1.addName("Ilif");
+    palindromeExercise1.determineAllPalindromes();
+    System.out.println();
+  
+    // Test Case #2
+    //  Note: Even though the order of the names has changed the output had better be the same
+    System.out.println("Test Case #2:");
+    PalindromeExercise palindromeExercise2 = new PalindromeExercise();
+    palindromeExercise2.addName("Fili");
+    palindromeExercise2.addName("Mark");
+    palindromeExercise2.addName("Gimli");
+    palindromeExercise2.addName("Ilif");
+    palindromeExercise2.addName("Ilmig");
+    palindromeExercise2.determineAllPalindromes();
+    System.out.println();
+  
+    // Test Case #2
+    //  Note: Even though the order of the names has changed the output had better be the same
+    System.out.println("Test Case #3:");
+    PalindromeExercise palindromeExercise3 = new PalindromeExercise();
+    palindromeExercise3.addName("Mark");
+    palindromeExercise3.addName("Ilmig");
+    palindromeExercise3.addName("Fili");
+    palindromeExercise3.addName("Gimli");
+    palindromeExercise3.addName("Ilif");
+    palindromeExercise3.determineAllPalindromes();
+    System.out.println();
   }
 }
