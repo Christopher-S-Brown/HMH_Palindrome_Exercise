@@ -124,7 +124,7 @@ public class PalindromeExercise {
   }
   
   /*
-   * Check a string against its reverse string
+   * Check a string against its reverse string (ignoring case)
    *
    * @param palindromeCandidate Check if the string is a palindrome
    * @return boolean            True if the string and its reverse are identical (ignoring case),
@@ -171,7 +171,7 @@ public class PalindromeExercise {
     palindromeExercise2.determineAllPalindromes();
     System.out.println();
   
-    // Test Case #2
+    // Test Case #3
     //  Note: Even though the order of the names has changed the output had better be the same
     System.out.println("Test Case #3:");
     PalindromeExercise palindromeExercise3 = new PalindromeExercise();
